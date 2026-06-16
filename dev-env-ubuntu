@@ -50,7 +50,5 @@ copy_file() {
     execute cp $from $to/$name
 }
 
-copy_dir .config $XDG_CONFIG_HOME
-copy_file hypr/bindings.conf $XDG_CONFIG_HOME/hypr
-copy_file hypr/hyprland.conf $XDG_CONFIG_HOME/hypr
-copy_dir omarchy $XDG_CONFIG_HOME/omarchy
+copy_dir common/dirs/.config $XDG_CONFIG_HOME
+copy_dir omarchy/dirs/omarchy $XDG_CONFIG_HOME/omarchy

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# This hook is called with the kebab-cased theme name (e.g. "matte-black").
 # It copies the theme's neovim.lua into the nvim config as set-theme.lua
 # so the name in neovim.lua is what nvim uses.
 
