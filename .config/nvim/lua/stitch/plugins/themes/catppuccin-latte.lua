@@ -8,6 +8,6 @@ require("catppuccin").setup({
 })
 
 return {
-	colorscheme = "catppuccin",
+	colorscheme = "catppuccin-latte",
 	lualine_theme = "catppuccin",
 }

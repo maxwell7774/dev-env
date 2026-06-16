@@ -30,6 +30,10 @@ function theme_module.use(name)
 		return
 	end
 
+	if theme.background then
+		vim.o.background = "dark"
+	end
+
 	if theme.apply then
 		theme.apply()
 	else
@@ -69,6 +73,7 @@ function theme_module.use(name)
 end
 
 function theme_module.detect()
+	package.loaded["stitch.plugins.themes.set-theme"] = nil
 	local ok, machine_theme = pcall(require, "stitch.plugins.themes.set-theme")
 	if ok and type(machine_theme) == "string" and themes[machine_theme] then
 		return machine_theme

@@ -9,4 +9,5 @@ require("gruvbox").setup()
 return {
 	colorscheme = "gruvbox",
 	lualine_theme = "gruvbox",
+	background = "dark",
 }
