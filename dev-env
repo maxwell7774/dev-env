@@ -53,3 +53,4 @@ copy_file() {
 copy_dir .config $XDG_CONFIG_HOME
 copy_file hypr/bindings.conf $XDG_CONFIG_HOME/hypr
 copy_file hypr/hyprland.conf $XDG_CONFIG_HOME/hypr
+copy_dir omarchy $XDG_CONFIG_HOME/omarchy

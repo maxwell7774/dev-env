@@ -74,6 +74,15 @@ function theme_module.detect()
 		return machine_theme
 	end
 
+	local theme_file = vim.fn.expand("~/.config/omarchy/current/theme.name")
+	local ok, lines = pcall(vim.fn.readfile, theme_file)
+	if ok and #lines > 0 then
+		local name = lines[1]:gsub("%s+", "")
+		if themes[name] then
+			return name
+		end
+	end
+
 	return "gruvbox"
 end
 

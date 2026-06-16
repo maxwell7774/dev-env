@@ -1,0 +1,1 @@
+return "osaka_jade"
