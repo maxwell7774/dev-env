@@ -63,8 +63,11 @@ copy_dir ./env/.config $XDG_CONFIG_HOME
 copy_dir ./env/.local $HOME/.local
 
 copy_file ./env/.bash_profile $HOME
-copy_file ./env/.tmux-sessonizer $HOME
+copy_file ./env/.bashrc $HOME
+copy_file ./env/.tmux-sessionizer $HOME
 
 copy_file ./omarchy/bindings.conf $XDG_CONFIG_HOME/hypr
 copy_file ./omarchy/hyprland.conf $XDG_CONFIG_HOME/hypr
 copy_dir ./omarchy $XDG_CONFIG_HOME/omarchy
+
+hyprctl reload
