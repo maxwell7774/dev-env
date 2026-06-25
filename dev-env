@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
 script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+dev_env=$($HOME/dev)
+
 dry="0"
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+    echo "no xdg config hom"
+    echo "using ~/.config"
+    XDG_CONFIG_HOME=$HOME/.config
+fi
 
 while [[ $# > 0 ]]; do
     if [[ $1 == "--dry" ]]; then
@@ -50,8 +58,13 @@ copy_file() {
     execute cp $from $to/$name
 }
 
-copy_dir common/dirs/.config $XDG_CONFIG_HOME
-copy_dir omarchy/dirs/.config $XDG_CONFIG_HOME
-copy_file omarchy/files/hypr/bindings.conf $XDG_CONFIG_HOME/hypr
-copy_file omarchy/files/hypr/hyprland.conf $XDG_CONFIG_HOME/hypr
-copy_dir omarchy/dirs/omarchy $XDG_CONFIG_HOME/omarchy
+
+copy_dir ./env/.config $XDG_CONFIG_HOME
+copy_dir ./env/.local $HOME/.local
+
+copy_file ./env/.bash_profile $HOME
+copy_file ./env/.tmux-sessonizer $HOME
+
+copy_file ./omarchy/bindings.conf $XDG_CONFIG_HOME/hypr
+copy_file ./omarchy/hyprland.conf $XDG_CONFIG_HOME/hypr
+copy_dir ./omarchy $XDG_CONFIG_HOME/omarchy

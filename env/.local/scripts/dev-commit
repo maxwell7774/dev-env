@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd $HOME/dev
+git add .
+git commit -m "automated dev committ"
+git push origin main
