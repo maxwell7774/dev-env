@@ -2,7 +2,7 @@ require("default.hypr.bindings.media")
 require("bindings.tiling")
 require("bindings.screenshot")
 require("bindings.applications")
-require("bindings.system")
+require("bindings.utilities")
 
 -- Keep only your personal keybinding overrides here. Add new bindings or
 -- unbind defaults before replacing them.
