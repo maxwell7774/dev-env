@@ -48,3 +48,16 @@
 --     column_width = 0.97,
 --   },
 -- })
+hl.config({
+	decoration = {
+		active_opacity = 0.94,
+		inactive_opacity = 0.9,
+		-- blur = {
+		-- 	enabled = true,
+		-- 	size = 2,
+		-- 	passes = 1,
+		-- 	new_optimizations = true,
+		-- 	ignore_opacity = true,
+		-- },
+	},
+})
