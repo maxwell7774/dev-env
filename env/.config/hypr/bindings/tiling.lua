@@ -28,6 +28,9 @@ o.bind("SUPER + ALT + O", "Move window to workspace 3", hl.dsp.window.move({ wor
 o.bind("SUPER + ALT + P", "Move window to workspace 4", hl.dsp.window.move({ workspace = 4 }))
 o.bind("SUPER + ALT + BRACKETLEFT", "Move window to workspace 5", hl.dsp.window.move({ workspace = 5 }))
 
+o.bind("SUPER + mouse:272", "Move window", hl.dsp.window.drag(), { mouse = true })
+o.bind("SUPER + mouse:273", "Resize window", hl.dsp.window.resize(), { mouse = true })
+
 o.bind(
 	"SUPER + CTRL + ALT + U",
 	"Move window silently to workspace 1",
