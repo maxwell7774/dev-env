@@ -1,3 +1,5 @@
+local M = require("stitch.plugins.themes.init_utils")
+
 local colors = {
 	bg = "#121212",
 	fg = "#bebebe",
@@ -5,52 +7,21 @@ local colors = {
 	yellow = "#FFC107",
 	darkred = "#b91c1c",
 	orange = "#e68e0d",
-	brightred = "#B91C1C",
-	brightyellow = "#FFC107",
-	white = "#bebebe",
 	brightbg = "#8a8a8d",
-	cursor = "#eaeaea",
-	selection_bg = "#515151",
-	selection_fg = "#bebebe",
 }
-local matteblack_theme = {
-	normal = {
-		a = { fg = colors.bg, bg = colors.yellow, gui = "bold" },
-		b = { fg = colors.fg, bg = colors.brightbg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-	insert = {
-		a = { fg = colors.bg, bg = colors.brightred, gui = "bold" },
-		b = { fg = colors.fg, bg = colors.brightbg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-	visual = {
-		a = { fg = colors.bg, bg = colors.orange, gui = "bold" },
-		b = { fg = colors.fg, bg = colors.brightbg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-	replace = {
-		a = { fg = colors.bg, bg = colors.darkred, gui = "bold" },
-		b = { fg = colors.fg, bg = colors.brightbg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-	command = {
-		a = { fg = colors.bg, bg = colors.yellow, gui = "bold" },
-		b = { fg = colors.fg, bg = colors.brightbg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-	inactive = {
-		a = { fg = colors.fg, bg = colors.bg },
-		b = { fg = colors.fg, bg = colors.bg },
-		c = { fg = colors.fg, bg = colors.bg },
-	},
-}
-vim.pack.add({
-	github("tahayvr/matteblack.nvim"),
-	github("nvim-tree/nvim-web-devicons"),
-	github("nvim-lualine/lualine.nvim"),
-})
+
+M.add_plugins("tahayvr/matteblack.nvim")
+
 return {
 	colorscheme = "matteblack",
-	lualine_theme = matteblack_theme,
+	lualine_theme = M.make_lualine_theme({
+		bg = colors.bg,
+		fg = colors.fg,
+		b_bg = colors.brightbg,
+		normal_accent = colors.yellow,
+		insert_accent = colors.red,
+		visual_accent = colors.orange,
+		replace_accent = colors.darkred,
+		command_accent = colors.yellow,
+	}),
 }

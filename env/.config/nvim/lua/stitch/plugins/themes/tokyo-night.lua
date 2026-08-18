@@ -1,8 +1,5 @@
-vim.pack.add({
-	github("folke/tokyonight.nvim"),
-	github("nvim-tree/nvim-web-devicons"),
-	github("nvim-lualine/lualine.nvim"),
-})
+local M = require("stitch.plugins.themes.init_utils")
+M.add_plugins("folke/tokyonight.nvim")
 
 return {
 	colorscheme = "tokyonight",

@@ -1,8 +1,5 @@
-vim.pack.add({
-	github("neanias/everforest-nvim"),
-	github("nvim-tree/nvim-web-devicons"),
-	github("nvim-lualine/lualine.nvim"),
-})
+local M = require("stitch.plugins.themes.init_utils")
+M.add_plugins("neanias/everforest-nvim")
 
 require("everforest").setup({
 	background = "hard",

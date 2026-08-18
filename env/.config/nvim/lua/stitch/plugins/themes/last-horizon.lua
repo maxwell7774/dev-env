@@ -1,37 +1,36 @@
 local M = require("stitch.plugins.themes.init_utils")
 
 local colors = {
-	bg = "#0a0e14",
-	fg = "#b3b1ad",
-	black = "#01060e",
-	red = "#ea6c73",
-	green = "#91b362",
-	yellow = "#f9af4f",
-	blue = "#53bdfa",
-	magenta = "#fae994",
-	cyan = "#90e1c6",
-	white = "#c7c7c7",
-	brightblack = "#686868",
-	brightred = "#f07178",
-	brightgreen = "#c2d94c",
-	brightyellow = "#ffb454",
-	brightblue = "#59c2ff",
-	brightmagenta = "#ffee99",
-	brightcyan = "#95e6cb",
-	brightwhite = "#ffffff",
-	selection_bg = "#253340",
-	comment = "#4a5568",
-	line_bg = "#0d1117",
+	bg = "#0c0b0c",
+	fg = "#FAFCFB",
+	black = "#090809",
+	red = "#c38b7b",
+	green = "#87a9b0",
+	yellow = "#6B5E73",
+	blue = "#b59790",
+	magenta = "#c4d8e2",
+	cyan = "#a5a0b6",
+	white = "#e2dddc",
+	brightblack = "#584e51",
+	brightred = "#c38b7b",
+	brightgreen = "#87a9b0",
+	brightyellow = "#6B5E73",
+	brightblue = "#b59790",
+	brightmagenta = "#c4d8e2",
+	brightcyan = "#a5a0b6",
+	brightwhite = "#FAFCFB",
+	selection = "#584e51",
+	accent = "#b59790",
 }
 
-local function setup_hackerman_theme()
+local function setup_last_horizon_theme()
 	vim.cmd("hi clear")
 	if vim.fn.exists("syntax_on") then
 		vim.cmd("syntax reset")
 	end
 
 	vim.o.background = "dark"
-	vim.g.colors_name = "hackerman"
+	vim.g.colors_name = "last-horizon"
 
 	local function highlight(group, color)
 		local style = color.style and "gui=" .. color.style or "gui=NONE"
@@ -43,14 +42,14 @@ local function setup_hackerman_theme()
 
 	-- Editor highlights
 	highlight("Normal", { fg = colors.fg, bg = colors.bg })
-	highlight("NormalFloat", { fg = colors.fg, bg = colors.line_bg })
-	highlight("Comment", { fg = colors.comment, style = "italic" })
-	highlight("Cursor", { fg = colors.bg, bg = colors.cyan })
-	highlight("CursorLine", { bg = colors.line_bg })
+	highlight("NormalFloat", { fg = colors.fg, bg = colors.bg })
+	highlight("Comment", { fg = colors.brightblack, style = "italic" })
+	highlight("Cursor", { fg = colors.bg, bg = colors.fg })
+	highlight("CursorLine", { bg = colors.selection })
 	highlight("CursorLineNr", { fg = colors.blue, style = "bold" })
-	highlight("LineNr", { fg = colors.comment })
-	highlight("Visual", { bg = colors.selection_bg })
-	highlight("VisualNOS", { bg = colors.selection_bg })
+	highlight("LineNr", { fg = colors.brightblack })
+	highlight("Visual", { bg = colors.selection })
+	highlight("VisualNOS", { bg = colors.selection })
 
 	-- Syntax highlighting
 	highlight("Constant", { fg = colors.cyan })
@@ -60,7 +59,7 @@ local function setup_hackerman_theme()
 	highlight("Boolean", { fg = colors.cyan })
 	highlight("Float", { fg = colors.cyan })
 
-	highlight("Identifier", { fg = colors.cyan })
+	highlight("Identifier", { fg = colors.fg })
 	highlight("Function", { fg = colors.magenta })
 
 	highlight("Statement", { fg = colors.blue })
@@ -82,11 +81,11 @@ local function setup_hackerman_theme()
 	highlight("Structure", { fg = colors.yellow })
 	highlight("Typedef", { fg = colors.yellow })
 
-	highlight("Special", { fg = colors.brightcyan })
-	highlight("SpecialChar", { fg = colors.brightcyan })
+	highlight("Special", { fg = colors.cyan })
+	highlight("SpecialChar", { fg = colors.cyan })
 	highlight("Tag", { fg = colors.magenta })
 	highlight("Delimiter", { fg = colors.white })
-	highlight("SpecialComment", { fg = colors.comment })
+	highlight("SpecialComment", { fg = colors.brightblack })
 	highlight("Debug", { fg = colors.red })
 
 	highlight("Underlined", { style = "underline" })
@@ -94,31 +93,31 @@ local function setup_hackerman_theme()
 	highlight("Todo", { fg = colors.yellow, bg = colors.bg, style = "bold" })
 
 	-- UI elements
-	highlight("Pmenu", { fg = colors.fg, bg = colors.line_bg })
-	highlight("PmenuSel", { fg = colors.black, bg = colors.blue })
-	highlight("PmenuSbar", { bg = colors.brightblack })
+	highlight("Pmenu", { fg = colors.fg, bg = colors.selection })
+	highlight("PmenuSel", { fg = colors.bg, bg = colors.blue })
+	highlight("PmenuSbar", { bg = colors.selection })
 	highlight("PmenuThumb", { bg = colors.blue })
 
-	highlight("StatusLine", { fg = colors.blue, bg = colors.brightblack })
-	highlight("StatusLineNC", { fg = colors.comment, bg = colors.brightblack })
+	highlight("StatusLine", { fg = colors.blue, bg = colors.selection })
+	highlight("StatusLineNC", { fg = colors.brightblack, bg = colors.selection })
 
-	highlight("TabLine", { fg = colors.white, bg = colors.brightblack })
+	highlight("TabLine", { fg = colors.white, bg = colors.selection })
 	highlight("TabLineFill", { bg = colors.black })
-	highlight("TabLineSel", { fg = colors.black, bg = colors.blue })
+	highlight("TabLineSel", { fg = colors.bg, bg = colors.blue })
 
 	highlight("VertSplit", { fg = colors.brightblack })
 	highlight("SignColumn", { bg = colors.bg })
-	highlight("ColorColumn", { bg = colors.line_bg })
+	highlight("ColorColumn", { bg = colors.selection })
 
 	-- Search
-	highlight("Search", { fg = colors.black, bg = colors.yellow })
-	highlight("IncSearch", { fg = colors.black, bg = colors.cyan })
+	highlight("Search", { fg = colors.bg, bg = colors.yellow })
+	highlight("IncSearch", { fg = colors.bg, bg = colors.cyan })
 
 	-- Diff
-	highlight("DiffAdd", { fg = colors.green, bg = colors.line_bg })
-	highlight("DiffChange", { fg = colors.yellow, bg = colors.line_bg })
-	highlight("DiffDelete", { fg = colors.red, bg = colors.line_bg })
-	highlight("DiffText", { fg = colors.blue, bg = colors.line_bg })
+	highlight("DiffAdd", { fg = colors.green, bg = colors.bg })
+	highlight("DiffChange", { fg = colors.yellow, bg = colors.bg })
+	highlight("DiffDelete", { fg = colors.red, bg = colors.bg })
+	highlight("DiffText", { fg = colors.blue, bg = colors.bg })
 
 	-- Git signs
 	highlight("GitSignsAdd", { fg = colors.green })
@@ -141,9 +140,9 @@ local function setup_hackerman_theme()
 	highlight("@operator", { fg = colors.cyan })
 	highlight("@type", { fg = colors.yellow })
 	highlight("@type.builtin", { fg = colors.yellow })
-	highlight("@parameter", { fg = colors.cyan })
+	highlight("@parameter", { fg = colors.fg })
 	highlight("@property", { fg = colors.cyan })
-	highlight("@comment", { fg = colors.comment, style = "italic" })
+	highlight("@comment", { fg = colors.brightblack, style = "italic" })
 
 	-- Diagnostic
 	highlight("DiagnosticError", { fg = colors.red })
@@ -173,16 +172,16 @@ end
 M.add_plugins()
 
 return {
-	colorscheme = "hackerman",
+	colorscheme = "last-horizon",
 	lualine_theme = M.make_lualine_theme({
 		bg = colors.bg,
 		fg = colors.fg,
-		b_bg = colors.black,
+		b_bg = colors.brightblack,
 		normal_accent = colors.blue,
 		insert_accent = colors.green,
 		visual_accent = colors.magenta,
 		replace_accent = colors.red,
 		command_accent = colors.cyan,
 	}),
-	apply = setup_hackerman_theme,
+	apply = setup_last_horizon_theme,
 }

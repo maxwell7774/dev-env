@@ -7,7 +7,9 @@ local themes = {
 	gruvbox = require("stitch.plugins.themes.gruvbox"),
 	hackerman = require("stitch.plugins.themes.hackerman"),
 	kanagawa = require("stitch.plugins.themes.kanagawa"),
+	last_horizon = require("stitch.plugins.themes.last-horizon"),
 	lumon = require("stitch.plugins.themes.lumon"),
+	lupine = require("stitch.plugins.themes.lupine"),
 	matte_black = require("stitch.plugins.themes.matte-black"),
 	miasma = require("stitch.plugins.themes.miasma"),
 	nes = require("stitch.plugins.themes.nes"),
@@ -16,6 +18,7 @@ local themes = {
 	retro_82 = require("stitch.plugins.themes.retro-82"),
 	ristretto = require("stitch.plugins.themes.ristretto"),
 	rose_pine = require("stitch.plugins.themes.rose-pine"),
+	solitude = require("stitch.plugins.themes.solitude"),
 	tokyo_night = require("stitch.plugins.themes.tokyo-night"),
 	vantablack = require("stitch.plugins.themes.vantablack"),
 	white = require("stitch.plugins.themes.white"),
@@ -79,12 +82,16 @@ function theme_module.detect()
 		return machine_theme
 	end
 
-	local theme_file = vim.fn.expand("~/.config/omarchy/current/theme.name")
+	local theme_file = vim.fn.expand("~/.local/state/omarchy/current/theme.name")
 	local ok, lines = pcall(vim.fn.readfile, theme_file)
 	if ok and #lines > 0 then
 		local name = lines[1]:gsub("%s+", "")
 		if themes[name] then
 			return name
+		end
+		local normalized = name:gsub("-", "_")
+		if themes[normalized] then
+			return normalized
 		end
 	end
 

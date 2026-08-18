@@ -1,10 +1,8 @@
-vim.pack.add({
-	github("catppuccin/nvim"),
-	github("nvim-tree/nvim-web-devicons"),
-	github("nvim-lualine/lualine.nvim"),
-})
+local M = require("stitch.plugins.themes.init_utils")
+M.add_plugins("catppuccin/nvim")
+
 require("catppuccin").setup({
-	flavour = "macchiato", -- other options: "mocha", "frappe", "macchiato"
+	flavour = "macchiato",
 })
 
 return {
