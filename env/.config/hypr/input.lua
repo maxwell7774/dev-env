@@ -44,6 +44,13 @@ hl.config({
 	},
 })
 
+hl.device({
+	name = "ven_2c2f:00-2c2f:0034-touchpad",
+	sensitivity = 0.35, -- Adjust between -1.0 and 1.0
+	accel_profile = "adaptive",
+})
+-- Target only your specific touchpad
+
 -- App-specific touchpad scroll speeds.
 -- o.window("(Alacritty|kitty|foot)", { scroll_touchpad = 1.5 })
 -- o.window("com.mitchellh.ghostty", { scroll_touchpad = 0.2 })
