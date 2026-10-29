@@ -7,6 +7,8 @@ require("tree-sitter-manager").setup({
 		"json",
 		"gitignore",
 		"go",
+		"gotmpl",
+		"helm",
 		"sql",
 		"javascript",
 		"typescript",
@@ -21,4 +23,10 @@ require("tree-sitter-manager").setup({
 		"vimdoc",
 	},
 	auto_install = true,
+})
+
+vim.filetype.add({
+	extension = {
+		gohtml = "gotmpl", -- Tells Neovim .gohtml maps to the standard gotmpl filetype
+	},
 })

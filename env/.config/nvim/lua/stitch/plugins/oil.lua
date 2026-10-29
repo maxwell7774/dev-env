@@ -4,6 +4,16 @@ vim.pack.add({
   github "stevearc/oil.nvim",
 })
 
+require("mini.icons").setup({
+	extension = {
+		gohtml = { glyph = "", hl = "MiniIconsOrange" },
+	},
+	filetype = {
+		gotmpl = { glyph = "", hl = "MiniIconsOrange" },
+	},
+})
+MiniIcons.mock_nvim_web_devicons()
+
 require("oil").setup({
   default_file_explorer = true,
   keymaps = {

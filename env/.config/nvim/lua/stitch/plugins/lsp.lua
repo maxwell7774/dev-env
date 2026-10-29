@@ -73,8 +73,18 @@ vim.diagnostic.config({
 })
 
 local servers = {
-	gopls = {},
-	html = {},
+	gopls = {
+		-- Default filetypes already include gotmpl, so no override needed.
+		-- templateExtensions teaches gopls that .gohtml files are templates.
+		settings = {
+			gopls = {
+				templateExtensions = { "gotmpl", "gohtml" },
+			},
+		},
+	},
+	html = {
+		filetypes = { "html", "gotmpl" },
+	},
 	ts_ls = {},
 	jsonls = {},
 	prettierd = {},
@@ -85,7 +95,15 @@ local servers = {
 	-- 	single_file_support = false,
 	-- 	settings = {},
 	-- },
-	tailwindcss = {},
+	tailwindcss = {
+		settings = {
+			tailwindCSS = {
+				includeLanguages = {
+					gotmpl = "html",
+				},
+			},
+		},
+	},
 	cssls = {},
 
 	stylua = {}, -- Used to format Lua code
@@ -145,6 +163,24 @@ vim.list_extend(ensure_installed, {
 })
 
 require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+
+-- tailwindcss upstream defaults lack gotmpl; add it without clobbering the default list.
+do
+	local cfg = nil
+	pcall(function()
+		cfg = vim.lsp.config["tailwindcss"]
+	end)
+	if cfg == nil then
+		pcall(function()
+			cfg = vim.lsp.config("tailwindcss")
+		end)
+	end
+	local fts = cfg and cfg.filetypes or nil
+	if fts and not vim.list_contains(fts, "gotmpl") then
+		local extended = vim.list_extend(vim.deepcopy(fts), { "gotmpl" })
+		servers.tailwindcss.filetypes = extended
+	end
+end
 
 for name, server in pairs(servers) do
 	vim.lsp.config(name, server)
