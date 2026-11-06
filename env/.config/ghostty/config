@@ -34,7 +34,8 @@ keybind = super+control+shift+alt+arrow_up=resize_split:up,100
 keybind = super+control+shift+alt+arrow_left=resize_split:left,100
 keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 
-background-opacity-cells = true
+# Gives some more transparency to some of the opaque stuff
+# background-opacity-cells = true
 
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 0.95
