@@ -1,3 +1,25 @@
+-- gopls documentHighlight returns whole-block ranges in gotmpl/gohtml,
+-- painting LspReferenceRead over the file (see :Inspect). Drop only gopls
+-- results in template buffers; html highlights and gopls completions stay
+-- on, .go files unaffected. Wrapping the handler (rather than mutating
+-- client.server_capabilities, which is shared across buffers) keeps this
+-- buffer-local. Stock CursorHold autocmds below stay untouched.
+local orig_doc_highlight = vim.lsp.handlers["textDocument/documentHighlight"]
+vim.lsp.handlers["textDocument/documentHighlight"] = function(err, result, ctx, config)
+	local bufnr = ctx and ctx.bufnr
+	local client_id = ctx and ctx.client_id
+	if bufnr and client_id and vim.api.nvim_buf_is_valid(bufnr) then
+		local c = vim.lsp.get_client_by_id(client_id)
+		if c and c.name == "gopls" then
+			local ft = vim.bo[bufnr].filetype
+			if ft == "gotmpl" or ft == "gohtml" then
+				return
+			end
+		end
+	end
+	return orig_doc_highlight(err, result, ctx, config)
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 	callback = function(event)
