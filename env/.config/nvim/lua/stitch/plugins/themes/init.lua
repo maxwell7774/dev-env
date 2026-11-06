@@ -159,9 +159,46 @@ M.apply = apply
 -- ---------------------------------------------------------------------------
 -- Lualine
 -- ---------------------------------------------------------------------------
+-- Build the theme from the same palette as the colorscheme instead of aether's
+-- bundled lualine theme. That theme gives b/y a dark_bg and c/x a lighter bg,
+-- which shows up as darker chips and visible separator "bites" in the bar. One
+-- shared background keeps it a single solid strip; only the mode block and the
+-- right-hand location cap keep an accent color.
+--
+-- Passing a function (not a table) matters: lualine re-runs its ColorScheme
+-- autocmd on every apply(), so theme switches pick up the new palette without
+-- a restart.
+local function lualine_theme()
+	local c = resolve_palette().colors
+	local bar_bg = c.dark_bg
+
+	-- z falls back to a and y falls back to b (lualine section mapping), so
+	-- the clock cap inherits the mode accent and the right side inherits bar_bg.
+	local function mode(accent)
+		return {
+			a = { bg = accent, fg = c.darker_bg, gui = "bold" },
+			b = { bg = bar_bg, fg = accent },
+			c = { bg = bar_bg, fg = c.fg },
+			x = { bg = bar_bg, fg = c.fg },
+		}
+	end
+
+	return {
+		normal = mode(c.yellow),
+		insert = mode(c.green),
+		command = mode(c.orange),
+		visual = mode(c.bright_magenta),
+		replace = mode(c.bright_red),
+		inactive = {
+			a = { bg = bar_bg, fg = c.muted },
+			b = { bg = bar_bg, fg = c.muted },
+		},
+	}
+end
+
 require("lualine").setup({
 	options = {
-		theme = "aether",
+		theme = lualine_theme,
 		globalstatus = true,
 		component_separators = "",
 		section_separators = { left = "", right = "" },
