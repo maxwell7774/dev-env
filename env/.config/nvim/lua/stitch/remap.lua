@@ -16,20 +16,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("Signal", {
-	pattern = "SIGUSR1",
-	group = vim.api.nvim_create_augroup("theme_reload", {}),
-	callback = function()
-		local themes = require("stitch.plugins.themes")
-		local name = themes.detect()
-		themes.use(name)
-		vim.schedule(function()
-			vim.cmd("redraw!")
-		end)
-	end,
-	nested = true,
-})
-
 -- vim.keymap.set("n", "<leader>sv", vim.cmd.Ex, { desc = "Opens file explore" })
 vim.keymap.set("n", "<leader>sv", "<CMD>Oil<CR>", { desc = "Opens file explore" })
 

@@ -1,1 +1,0 @@
-return "flexoki_light"

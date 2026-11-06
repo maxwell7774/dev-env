@@ -1,1 +1,0 @@
-return "osaka_jade"

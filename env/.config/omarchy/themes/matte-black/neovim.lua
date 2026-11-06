@@ -1,1 +1,0 @@
-return "matte_black"

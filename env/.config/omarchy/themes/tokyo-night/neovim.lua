@@ -1,1 +1,0 @@
-return "tokyo_night"

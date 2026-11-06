@@ -1,1 +1,0 @@
-return "last_horizon"
