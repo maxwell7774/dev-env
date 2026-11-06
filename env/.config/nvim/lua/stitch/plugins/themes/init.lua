@@ -134,6 +134,20 @@ local function apply()
 			sidebars = transparent and "transparent" or "dark",
 			floats = transparent and "transparent" or "dark",
 		},
+		-- Telescope floats use dark_bg/bg_popup by default, which stands out
+		-- against the editor background. Match them to Normal instead (solid
+		-- bg when opaque, NONE when translucent/glassy).
+		on_highlights = function(hl, colors)
+			local bg = transparent and "NONE" or spec.colors.bg
+			hl.TelescopeNormal = { link = "Normal" }
+			hl.TelescopeResultsNormal = { link = "Normal" }
+			hl.TelescopePreviewNormal = { link = "Normal" }
+			hl.TelescopePromptNormal = { bg = bg }
+			hl.TelescopeBorder = { fg = colors.border_highlight, bg = bg }
+			hl.TelescopeResultsBorder = { fg = colors.border_highlight, bg = bg }
+			hl.TelescopePreviewBorder = { fg = colors.border_highlight, bg = bg }
+			hl.TelescopePromptBorder = { fg = colors.border_highlight, bg = bg }
+		end,
 	})
 
 	vim.o.background = spec.mode
