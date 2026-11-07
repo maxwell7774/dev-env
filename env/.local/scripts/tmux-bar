@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Paint the tmux status bar from the current Omarchy theme, using the same
+# palette lualine gets from `~/.local/state/omarchy/current/theme/colors.toml`:
+# a solid dark_background strip, mode-coloured caps, muted inactive windows.
+#
+# tmux.conf carries ANSI fallbacks, but the 16-colour palette has no
+# dark_background and no theme `accent`, so the exact values have to be pushed
+# in. Runs from tmux.conf on server start (run-shell) and from
+# ~/.config/omarchy/hooks/theme-set.d/tmux-bar.sh on every theme switch.
+set -euo pipefail
+
+colors=${XDG_STATE_HOME:-$HOME/.local/state}/omarchy/current/theme/colors.toml
+
+[[ -r $colors ]] || exit 0
+command -v tmux >/dev/null 2>&1 || exit 0
+tmux list-sessions >/dev/null 2>&1 || exit 0
+
+declare -A palette=()
+while IFS='=' read -r key value; do
+	[[ -n $key && -n $value ]] && palette[$key]=$value
+done < <(sed -n 's/^\([a-z_]*\) = "\([^"]*\)".*/\1=\2/p' "$colors")
+
+bar_bg=${palette[dark_background]:-${palette[background]:-}}
+fg=${palette[foreground]:-}
+accent=${palette[accent]:-${palette[blue]:-}}
+dark=${palette[darker_background]:-${palette[dark_background]:-${palette[background]:-}}}
+muted=${palette[muted]:-${palette[dark_foreground]:-}}
+
+[[ -n $bar_bg && -n $fg && -n $accent ]] || exit 0
+
+tmux set -g @bar_bg "$bar_bg"
+tmux set -g @bar_accent "$accent"
+tmux set -g @bar_dark "$dark"
+tmux set -g @bar_muted "$muted"
+tmux set -g @bar_yellow "${palette[yellow]:-$accent}"
+tmux set -g @bar_orange "${palette[orange]:-${palette[yellow]:-$accent}}"
+tmux set -g @bar_magenta "${palette[bright_magenta]:-${palette[magenta]:-$accent}}"
+
+tmux set -g status-style "bg=$bar_bg,fg=$fg"
+tmux set -g window-status-activity-style "fg=$accent,bg=$bar_bg"
+tmux set -g window-status-bell-style "fg=${palette[red]:-$accent},bg=$bar_bg"
+tmux set -g pane-border-style "fg=$muted"
+tmux set -g pane-active-border-style "fg=$accent"
+tmux set -g message-style "bg=$bar_bg,fg=$accent,fill=$bar_bg,width=100%,align=left"
+tmux set -g message-command-style "bg=$bar_bg,fg=$accent,fill=$bar_bg,width=100%,align=left"
+tmux set -g mode-style "bg=$accent,fg=$dark"
+tmux set -g clock-mode-colour "$accent"
+
+tmux refresh-client -S 2>/dev/null || true

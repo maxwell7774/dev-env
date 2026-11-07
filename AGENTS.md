@@ -4,7 +4,7 @@ Personal Omarchy Linux dotfiles. No build/test/lint. Source of truth is `env/` m
 
 ## Layout
 - `env/.config/` -> `$XDG_CONFIG_HOME` (`nvim/`, `hypr/`, `ghostty/`, `omarchy/`, `tmux/`)
-- `env/.local/scripts/` -> `~/.local/scripts` (`dev-env`, `dev-commit`, `tmux-sessionizer`)
+- `env/.local/scripts/` -> `~/.local/scripts` (`dev-env`, `dev-commit`, `tmux-sessionizer`, `tmux-bar`)
 - `env/.bashrc`, `env/.bash_profile`, `env/.tmux-sessionizer` -> `$HOME`
 - `dev-env` - deploy script; `run` - runs executable files in `runs/` (currently only `runs/neovim`); `runs/` - one-shot installer scripts
 
@@ -22,5 +22,6 @@ Personal Omarchy Linux dotfiles. No build/test/lint. Source of truth is `env/` m
 - `env/.config/hypr/monitors.lua` has machine-specific outputs (`eDP-1` 2880x1800, `DP-2` 2560x1440). Update per machine.
 - Neovim theming is driven by Omarchy's `colors.toml` through `omacom/aether.nvim`: `env/.config/nvim/lua/stitch/plugins/themes/init.lua` parses `~/.local/state/omarchy/current/theme/colors.toml` into aether's palette and falls back to the bundled gruvbox palette in `themes/fallback.lua` on non-Omarchy systems. Transparency (opaque/translucent/glassy) maps to aether's `transparent` option and is live-followed by watching `~/.local/state/omarchy/toggles/hypr/`. No per-theme files, hooks, or overlays: an installed Omarchy theme is picked up automatically on `theme.name` change. Aether's built-in hotreload is stubbed out because it reads the LazyVim-shaped `neovim.lua` this config does not use.
 - `env/.config/ghostty/config` loads colors dynamically from `~/.local/state/omarchy/current/theme/ghostty.conf`; don't hardcode theme colors there.
+- tmux bar mirrors lualine's palette: `env/.local/scripts/tmux-bar` reads `colors.toml` and sets `@bar_*` options plus status/pane/message styles (solid `dark_background` strip, `accent` current window, `muted` inactive, mode-coloured caps). `env/.config/tmux/tmux.conf` only carries ANSI fallbacks and the format strings, which reference `#{@bar_*}`. It is repainted by `run-shell` at server start and by `env/.config/omarchy/hooks/theme-set.d/tmux-bar.sh` on theme switch, so don't hardcode hex in `tmux.conf`.
 - `env/.bashrc` sources `~/.local/share/omarchy/default/bash/rc`; override aliases below it, don't edit Omarchy defaults.
 - `tmux-sessionizer` is vendored in `env/.local/scripts/`; config is `env/.config/tmux-sessionizer/tmux-sessionizer.conf` (`TS_SEARCH_PATHS`, `TS_SESSION_COMMANDS`).
